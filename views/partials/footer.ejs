@@ -1,0 +1,21 @@
+<footer style="text-align:center; margin-top:40px; padding:15px; background:#f4f4f4; border-top:1px solid #ccc; border-radius:10px;">
+  <p>&copy; 2025 Wanderlust. All rights reserved.</p>
+</footer>
+<script>
+(() => {
+  'use strict';
+
+  const forms = document.querySelectorAll('.needs-validation');
+
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
+</script>

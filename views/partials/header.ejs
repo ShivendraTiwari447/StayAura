@@ -1,0 +1,328 @@
+<!-- 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="navbar">
+  <div class="logo"><a href="/listings">🏖 Wanderlust</a></div>
+  <div class="links" id="navLinks">
+    <a href="/listings">All Listings</a>
+    <a href="/listings/new" class="btn-create">+ Create Listing</a>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+<%- include("./flash") %>
+
+<style>
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.navbar .logo a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 22px;
+  color: #333;
+}
+
+.navbar .links a {
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+.btn-create {
+  padding: 8px 15px;
+  background: green;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.btn-create:hover {
+  background: darkgreen;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navbar .links {
+    display: none;
+    flex-direction: column;
+  }
+  .navbar .links a {
+    margin: 10px 0;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+</style>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+  });
+</script> -->
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <!-- Logo -->
+    <div class="logo">
+        <a href="/listings">🏖 WanderLust</a>
+    </div>
+
+    <!-- Navigation -->
+    <div class="links" id="navLinks">
+
+        <a href="/listings">All Listings</a>
+
+        <% if(currUser){ %>
+
+            <a href="/listings/new" class="btn-create">
+                + Create Listing
+            </a>
+
+            <span class="user-badge">
+                👋 <%= currUser.username %>
+            </span>
+
+            <a href="/logout" class="btn-logout">
+                Logout
+            </a>
+
+        <% } else { %>
+
+            <a href="/login" class="btn-login">
+                Login
+            </a>
+
+            <a href="/signup" class="btn-signup">
+                Sign Up
+            </a>
+
+        <% } %>
+
+    </div>
+
+    <!-- Hamburger -->
+
+    <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+</div>
+
+<%- include("./flash") %>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#fff;
+    padding:14px 28px;
+    border-radius:12px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.logo a{
+    text-decoration:none;
+    color:#0d6efd;
+    font-size:28px;
+    font-weight:700;
+}
+
+.links{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.links a{
+    text-decoration:none;
+    font-weight:600;
+    transition:.25s;
+}
+
+/* All Listings */
+
+.links > a:first-child{
+    color:#333;
+}
+
+.links > a:first-child:hover{
+    color:#0d6efd;
+}
+
+/* Create */
+
+.btn-create{
+    background:#198754;
+    color:#fff !important;
+    padding:8px 18px;
+    border-radius:8px;
+}
+
+.btn-create:hover{
+    background:#157347;
+}
+
+/* Login */
+
+.btn-login{
+    border:2px solid #0d6efd;
+    color:#0d6efd !important;
+    padding:8px 18px;
+    border-radius:8px;
+}
+
+.btn-login:hover{
+    background:#0d6efd;
+    color:#fff !important;
+}
+
+/* Signup */
+
+.btn-signup{
+    background:#0d6efd;
+    color:#fff !important;
+    padding:8px 18px;
+    border-radius:8px;
+}
+
+.btn-signup:hover{
+    background:#0b5ed7;
+}
+
+/* Logout */
+
+.btn-logout{
+    background:#dc3545;
+    color:#fff !important;
+    padding:8px 18px;
+    border-radius:8px;
+}
+
+.btn-logout:hover{
+    background:#bb2d3b;
+}
+
+/* Username */
+
+.user-badge{
+    background:#f8f9fa;
+    border:1px solid #ddd;
+    border-radius:20px;
+    padding:8px 15px;
+    font-weight:600;
+    color:#444;
+}
+
+/* Hamburger */
+
+.hamburger{
+    display:none;
+    flex-direction:column;
+    cursor:pointer;
+}
+
+.hamburger div{
+    width:26px;
+    height:3px;
+    background:#333;
+    margin:4px 0;
+    border-radius:4px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .hamburger{
+        display:flex;
+    }
+
+    .links{
+        display:none;
+        position:absolute;
+        top:75px;
+        left:15px;
+        right:15px;
+        background:white;
+        flex-direction:column;
+        padding:20px;
+        border-radius:12px;
+        box-shadow:0 5px 15px rgba(0,0,0,.15);
+        z-index:999;
+    }
+
+    .links.active{
+        display:flex;
+    }
+
+    .links a,
+    .user-badge{
+        width:100%;
+        text-align:center;
+    }
+
+}
+
+</style>
+
+<script>
+
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("navLinks");
+
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
+
+</script>
+

@@ -1,0 +1,93 @@
+/* =========================
+   STAR RATING
+========================= */
+
+.starability-slot {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.starability-slot legend {
+    display: none;
+}
+
+.starability-slot input {
+    display: none;
+}
+
+.starability-slot label {
+    font-size: 2rem;
+    color: #d4d4d4;
+    cursor: pointer;
+    transition: all .2s ease;
+    user-select: none;
+}
+
+.starability-slot label::before {
+    content: "★";
+}
+
+.starability-slot label:hover,
+.starability-slot label:hover ~ label {
+    color: #ffc107;
+    transform: scale(1.1);
+}
+
+.starability-slot input:checked ~ label {
+    color: #ffc107;
+}
+
+.starability-slot input:checked + label {
+    color: #ffb300;
+}
+
+.starability-slot label:active {
+    transform: scale(.95);
+}
+
+/* =========================
+   REVIEW RESULT
+========================= */
+
+.starability-result {
+    display: inline-block;
+    font-size: 1.3rem;
+    color: #d4d4d4;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+.starability-result::before {
+    content: "☆☆☆☆☆";
+}
+
+.starability-result[data-rating="1"]::before {
+    content: "★☆☆☆☆";
+    color: #ffc107;
+}
+
+.starability-result[data-rating="2"]::before {
+    content: "★★☆☆☆";
+    color: #ffc107;
+}
+
+.starability-result[data-rating="3"]::before {
+    content: "★★★☆☆";
+    color: #ffc107;
+}
+
+.starability-result[data-rating="4"]::before {
+    content: "★★★★☆";
+    color: #ffc107;
+}
+
+.starability-result[data-rating="5"]::before {
+    content: "★★★★★";
+    color: #ffc107;
+}
