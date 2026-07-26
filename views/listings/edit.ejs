@@ -1,84 +1,179 @@
-
 <%- include('../partials/header', { title: 'Edit Listing' }) %>
 
-<div class="container" style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-  
-  <a class="back" href="/listings/<%= listing._id %>" style="display:inline-block; margin-bottom:15px; color:blue; text-decoration:none;">← Back to Listing</a>
+<div class="container mt-4 mb-5" style="max-width:700px;">
 
-  <h2 style="text-align:center; margin-bottom:20px;">Edit Listing</h2>
+  <!-- Back Button -->
+  <a href="/listings/<%= listing._id %>" class="text-decoration-none mb-3 d-inline-block">
+    ← Back to Listing
+  </a>
 
-  <form action="/listings/<%= listing._id %>?_method=PUT" 
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+
+      <h2 class="text-center mb-4">Edit Listing</h2>
+
+      <form
+        action="/listings/<%= listing._id %>?_method=PUT"
         method="POST"
+        enctype="multipart/form-data"
         class="needs-validation"
-        novalidate>
+        novalidate
+      >
 
-    <input 
-      type="text" 
-      name="title" 
-      class="form-control mb-3"
-      placeholder="Title" 
-      value="<%= listing.title %>" 
-      required>
-    <div class="invalid-feedback">
-      Please enter a title.
+        <!-- Current Image -->
+        <div class="mb-4 text-center">
+          <label class="form-label fw-bold d-block">
+            Current Image
+          </label>
+
+          <% if(listing.image && listing.image.url){ %>
+            <img
+              src="<%= listing.image.url %>"
+              alt="Current Listing Image"
+              class="img-fluid rounded shadow-sm"
+              style="max-height:260px; object-fit:cover;"
+            >
+          <% } else { %>
+            <p class="text-muted">No image available.</p>
+          <% } %>
+        </div>
+
+        <!-- Replace Image -->
+        <div class="mb-3">
+          <label for="image" class="form-label fw-bold">
+            Replace Image
+          </label>
+
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            name="image"
+            accept="image/*"
+          >
+
+          <div class="form-text">
+            Leave this empty if you want to keep the current image.
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label fw-bold">
+            Title
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            value="<%= listing.title %>"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a title.
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label fw-bold">
+            Description
+          </label>
+
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="4"
+          ><%= listing.description %></textarea>
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="price" class="form-label fw-bold">
+            Price
+          </label>
+
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            name="price"
+            value="<%= listing.price %>"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a valid price.
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+          <label for="location" class="form-label fw-bold">
+            Location
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            id="location"
+            name="location"
+            value="<%= listing.location %>"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a location.
+          </div>
+        </div>
+
+        <!-- Country -->
+        <div class="mb-4">
+          <label for="country" class="form-label fw-bold">
+            Country
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            id="country"
+            name="country"
+            value="<%= listing.country %>"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a country.
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+
+          <button
+            type="submit"
+            class="btn btn-warning flex-fill"
+          >
+            Update Listing
+          </button>
+
+          <a
+            href="/listings/<%= listing._id %>"
+            class="btn btn-secondary flex-fill"
+          >
+            Cancel
+          </a>
+
+        </div>
+
+      </form>
+
     </div>
-
-    <textarea 
-      name="description" 
-      class="form-control mb-3"
-      placeholder="Description" 
-      rows="3"><%= listing.description %></textarea>
-
-    <input 
-      type="number" 
-      name="price" 
-      class="form-control mb-3"
-      placeholder="Price" 
-      value="<%= listing.price %>" 
-      required>
-    <div class="invalid-feedback">
-      Please enter a valid price.
-    </div>
-
-    <input 
-      type="text" 
-      name="location" 
-      class="form-control mb-3"
-      placeholder="Location" 
-      value="<%= listing.location %>" 
-      required>
-    <div class="invalid-feedback">
-      Please enter a location.
-    </div>
-
-    <input 
-      type="text" 
-      name="country" 
-      class="form-control mb-3"
-      placeholder="Country" 
-      value="<%= listing.country %>" 
-      required>
-    <div class="invalid-feedback">
-      Please enter a country.
-    </div>
-
-    <input 
-      type="url" 
-      name="imageUrl" 
-      class="form-control mb-3"
-      placeholder="Image URL" 
-      value="<%= listing.image.url %>">
-    <div class="invalid-feedback">
-      Please enter a valid URL.
-    </div>
-
-    <button 
-      type="submit" 
-      class="btn btn-warning">
-      Update Listing
-    </button>
-
-  </form>
+  </div>
 
 </div>
 

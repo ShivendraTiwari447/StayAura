@@ -1,5 +1,14 @@
 const express = require("express");
 const router = express.Router();
+
+const multer = require("multer");
+const {storage}=require("../cloudConfig.js")
+
+const upload = multer({ storage });
+
+
+
+
 const {
   index,
   renderNew,
@@ -10,6 +19,7 @@ const {
   deleteListing,
   validateListing,
 } = require("../controllers/listing");
+
 const { isLoggedIn, isOwner } = require("../middleware");
 
 router.route("/")
@@ -17,14 +27,40 @@ router.route("/")
 
 router.route("/listings")
   .get(index)
-  .post(isLoggedIn, validateListing, createListing);
+
+  // ============================
+  // ADD upload.single() HERE
+  // ============================
+  // Old:
+  // .post(isLoggedIn, validateListing, createListing)
+
+  // New:
+  .post(
+    upload.single("image"), // <-- Image upload middleware
+    isLoggedIn,
+    validateListing,
+    createListing
+  );
+
+  // ============================
+  // ONLY FOR TESTING (DON'T USE WITH ABOVE)
+  // Uncomment this if you only want to see req.file
+  // ============================
+  /*
+  .post(
+    upload.single("image"),
+    (req, res) => {
+      res.send(req.file);
+    }
+  );
+  */
 
 router.route("/listings/new")
   .get(isLoggedIn, renderNew);
 
 router.route("/listings/:id")
   .get(showListing)
-  .put(isLoggedIn, isOwner, validateListing, updateListing)
+  .put(isLoggedIn, isOwner, upload.single("image"), validateListing, updateListing)
   .delete(isLoggedIn, isOwner, deleteListing);
 
 router.route("/listings/:id/edit")

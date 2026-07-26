@@ -1,109 +1,123 @@
 <%- include('../partials/header', { title: 'Create New Listing' }) %>
 
 <div class="container" style="max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-  
-  <a class="back" href="/listings" style="display:inline-block; margin-bottom:15px; color:blue; text-decoration:none;">← Back to Listings</a>
+
+  <a class="back" href="/listings" style="display:inline-block; margin-bottom:15px; color:blue; text-decoration:none;">
+    ← Back to Listings
+  </a>
 
   <h2 style="text-align:center; margin-bottom:20px;">Create New Listing</h2>
 
-  <form action="/listings" method="POST" class="needs-validation" novalidate>
+  <form
+    action="/listings"
+    method="POST"
+    enctype="multipart/form-data"
+    class="needs-validation"
+    novalidate
+  >
 
-  <div class="mb-3">
-    <input
-      type="text"
-      name="title"
-      placeholder="Title"
-      class="form-control"
-      required
-    >
-    <div class="valid-feedback">
-      Looks good!
+    <!-- Title -->
+    <div class="mb-3">
+      <input
+        type="text"
+        name="title"
+        placeholder="Title"
+        class="form-control"
+        required
+      >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        Please enter a title.
+      </div>
     </div>
-    <div class="invalid-feedback">
-      Please enter a title.
-    </div>
-  </div>
 
-  <div class="mb-3">
-    <textarea
-      name="description"
-      placeholder="Description"
-      rows="3"
-      class="form-control"
-    ></textarea>
-  </div>
+    <!-- Description -->
+    <div class="mb-3">
+      <textarea
+        name="description"
+        placeholder="Description"
+        rows="3"
+        class="form-control"
+      ></textarea>
+    </div>
 
-  <div class="mb-3">
-    <input
-      type="number"
-      name="price"
-      placeholder="Price"
-      class="form-control"
-      required
-    >
-    <div class="valid-feedback">
-      Price looks good!
+    <!-- Price -->
+    <div class="mb-3">
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+        class="form-control"
+        required
+      >
+      <div class="valid-feedback">
+        Price looks good!
+      </div>
+      <div class="invalid-feedback">
+        Please enter a valid price.
+      </div>
     </div>
-    <div class="invalid-feedback">
-      Please enter a valid price.
-    </div>
-  </div>
 
-  <div class="mb-3">
-    <input
-      type="text"
-      name="location"
-      placeholder="Location"
-      class="form-control"
-      required
-    >
-    <div class="valid-feedback">
-      Looks good!
+    <!-- Location -->
+    <div class="mb-3">
+      <input
+        type="text"
+        name="location"
+        placeholder="Location"
+        class="form-control"
+        required
+      >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        Please enter a location.
+      </div>
     </div>
-    <div class="invalid-feedback">
-      Please enter a location.
-    </div>
-  </div>
 
-  <div class="mb-3">
-    <input
-      type="text"
-      name="country"
-      placeholder="Country"
-      class="form-control"
-      required
-    >
-    <div class="valid-feedback">
-      Looks good!
+    <!-- Country -->
+    <div class="mb-3">
+      <input
+        type="text"
+        name="country"
+        placeholder="Country"
+        class="form-control"
+        required
+      >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        Please enter a country.
+      </div>
     </div>
-    <div class="invalid-feedback">
-      Please enter a country.
-    </div>
-  </div>
 
-  <div class="mb-3">
-    <input
-      type="url"
-      name="imageUrl"
-      placeholder="Image URL"
-      class="form-control"
-      value="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
-      required
-    >
-    <div class="valid-feedback">
-      Valid image URL!
+    <!-- Image Upload -->
+    <div class="mb-3">
+      <label class="form-label">Upload Image</label>
+      <input
+        type="file"
+        name="image"
+        class="form-control"
+        accept="image/*"
+        required
+      >
+      <div class="valid-feedback">
+        Image selected!
+      </div>
+      <div class="invalid-feedback">
+        Please upload an image.
+      </div>
     </div>
-    <div class="invalid-feedback">
-      Please enter a valid URL.
-    </div>
-  </div>
 
-  <button type="submit" class="btn btn-success w-100">
-    Add Listing
-  </button>
+    <button type="submit" class="btn btn-success w-100">
+      Add Listing
+    </button>
 
-</form>
+  </form>
+
+</div>
 
 <%- include('../partials/footer') %>
-
-

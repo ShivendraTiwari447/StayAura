@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const { listingSchema } = require("../schema");
+const { cloudinary } = require("../cloudConfig");
 
 module.exports.validateListing = (req, res, next) => {
   const { error } = listingSchema.validate(req.body);
@@ -25,6 +26,9 @@ module.exports.renderNew = (req, res) => {
 module.exports.createListing = async (req, res) => {
   try {
     const { title, description, price, location, country, imageUrl } = req.body;
+    const image = req.file
+      ? { url: req.file.path, filename: req.file.filename }
+      : { url: imageUrl };
 
     const listing = new Listing({
       title,
@@ -32,7 +36,7 @@ module.exports.createListing = async (req, res) => {
       price,
       location,
       country,
-      image: { url: imageUrl },
+      image,
       owner: req.user._id,
     });
 
@@ -83,15 +87,36 @@ module.exports.renderEdit = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
   try {
     const { title, description, price, location, country, imageUrl } = req.body;
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      req.flash("error", "Listing not found.");
+      return res.redirect("/listings");
+    }
 
-    await Listing.findByIdAndUpdate(req.params.id, {
-      title,
-      description,
-      price,
-      location,
-      country,
-      image: { url: imageUrl },
-    });
+    listing.title = title;
+    listing.description = description;
+    listing.price = price;
+    listing.location = location;
+    listing.country = country;
+
+    if (req.file) {
+      if (listing.image && listing.image.filename) {
+        await cloudinary.uploader.destroy(listing.image.filename, {
+          invalidate: true,
+        });
+      }
+      listing.image = {
+        url: req.file.path,
+        filename: req.file.filename,
+      };
+    } else {
+      listing.image = {
+        url: imageUrl || listing.image.url,
+        filename: listing.image.filename,
+      };
+    }
+
+    await listing.save();
 
     req.flash("success", "Listing updated successfully!");
     res.redirect(`/listings/${req.params.id}`);
