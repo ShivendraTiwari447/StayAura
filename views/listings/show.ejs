@@ -21,6 +21,21 @@
         class="img-fluid rounded"
         style="height:350px; width:100%; object-fit:cover;">
 
+
+
+    <!-- ================= MAP ================= -->
+
+<h4 class="mt-4 mb-3">📍 Location on Map</h4>
+
+<div id="map"
+     style="height:400px;width:100%;border-radius:12px;border:1px solid #ddd;">
+</div>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <!-- Listing Details -->
     <div class="mt-4">
 
@@ -183,11 +198,34 @@
 
 </div>
 
+
+
+
+
 <!-- Bootstrap Validation Script -->
 
 <script>
 (() => {
 'use strict';
+
+    // ================= MAP =================
+
+  const coordinates = [
+    <%= listing.geometry.coordinates[1] %>,
+    <%= listing.geometry.coordinates[0] %>
+  ];
+
+  const map = L.map("map").setView(coordinates, 13);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors",
+    maxZoom: 19
+  }).addTo(map);
+
+  L.marker(coordinates)
+    .addTo(map)
+    .bindPopup("<b><%= listing.title %></b><br><%= listing.location %>, <%= listing.country %>")
+    .openPopup();
 
 const forms = document.querySelectorAll('.needs-validation');
 

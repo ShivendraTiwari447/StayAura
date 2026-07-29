@@ -86,6 +86,21 @@ const listingSchema = new Schema({
   country: {
     type: String,
   },
+  //added for maps
+
+  geometry: {
+  type: {
+    type: String,
+    enum: ["Point"],
+    default: "Point",
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    default: [80.9462, 26.8467],
+    required: true,
+  },
+},
 
   reviews: [
     {
