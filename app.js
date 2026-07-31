@@ -13,7 +13,12 @@ const reviewRoutes = require("./routes/review");
 const userRoutes = require("./routes/user.js");
 const User = require("./models/user.js");
 
-const MONGO_URL = process.env.ATLASDB_URL 
+const MONGO_URL = process.env.ATLASDB_URL;
+console.log("ATLASDB_URL =", process.env.ATLASDB_URL ? "FOUND" : "NOT FOUND");
+console.log("SECRET =", process.env.SECRET ? "FOUND" : "NOT FOUND");
+console.log("MONGO_URL =", MONGO_URL);
+
+const PORT = process.env.PORT || 8080;
 
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -92,6 +97,6 @@ app.use("/", reviewRoutes);
 app.use("/", userRoutes);
 
 // Start server
-app.listen(8080, () => {
-  console.log("Listening on port 8080");
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
