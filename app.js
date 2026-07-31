@@ -13,8 +13,10 @@ const reviewRoutes = require("./routes/review");
 const userRoutes = require("./routes/user.js");
 const User = require("./models/user.js");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = process.env.ATLASDB_URL 
+
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -36,8 +38,22 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 
+
+const store = MongoStore.create({
+  mongoUrl: MONGO_URL,
+  // crypto:{
+  //   secret: process.env.SECRET,
+  // },
+  touchAfter: 24 * 60 * 60 // time period in seconds
+});
+
+store.on("error", function(e){
+  console.log("SESSION STORE ERROR", e);
+});
+
 const sessionOption={
-  secret: "mysupersecret",
+  store: store,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie:{
@@ -46,6 +62,10 @@ const sessionOption={
     httpOnly: true
   }
 };
+
+
+
+  
 
 app.use(session(sessionOption));
 app.use(flash());
