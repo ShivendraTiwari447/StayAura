@@ -1,20 +1,126 @@
 <%- include('../partials/header', { title: 'All Listings' }) %>
 
+<style>
+body{
+    background:#111827;
+}
 
-<h1 style="text-align:center; margin-bottom:25px;">All Listings</h1>
+.listing-card{
+    background:#1f2937;
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+    transition:all .35s ease;
+}
 
-<!-- Listings Grid -->
-<div class="grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:20px;">
-  <% alllistings.forEach(listing => { %>
-    <div class="card" style="background:white; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); overflow:hidden; transition: transform 0.2s;">
-      <a href="/listings/<%= listing._id %>" style="display:block;">
-        <img src="<%= listing.image.url %>" alt="listing image" style="width:100%; height:180px; object-fit:cover; display:block;">
-        <div class="card-content" style="padding:15px; text-align:center; font-weight:bold; font-size:18px; color:#333;">
-          <%= listing.title %>
+.listing-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+
+.listing-card img{
+    height:250px;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.listing-card:hover img{
+    transform:scale(1.06);
+}
+
+.card-body{
+    background:#1f2937;
+}
+
+.card-title{
+    color:#fff;
+    font-weight:700;
+}
+
+.location{
+    color:#cbd5e1;
+    font-size:.95rem;
+}
+
+.price{
+    color:#22c55e;
+    font-size:1.25rem;
+    font-weight:700;
+}
+
+.view-btn{
+    background:#2563eb;
+    color:white;
+    border-radius:50px;
+    padding:6px 18px;
+    font-size:.9rem;
+}
+
+.view-btn:hover{
+    background:#1d4ed8;
+    color:white;
+}
+
+@media(max-width:768px){
+
+.listing-card img{
+height:220px;
+}
+
+}
+</style>
+
+<div class="container py-5">
+
+    <div class="row g-4">
+
+        <% alllistings.forEach(listing=>{ %>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+            <a href="/listings/<%= listing._id %>" class="text-decoration-none">
+
+                <div class="card listing-card h-100">
+
+                    <img
+                        src="<%= listing.image.url %>"
+                        class="card-img-top"
+                        alt="<%= listing.title %>">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            <%= listing.title %>
+                        </h5>
+
+                        <p class="location mb-3">
+                            📍 <%= listing.location %>, <%= listing.country %>
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <span class="price">
+                                ₹ <%= listing.price %>
+                            </span>
+
+                            <span class="view-btn">
+                                View
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+
         </div>
-      </a>
+
+        <% }) %>
+
     </div>
-  <% }) %>
+
 </div>
 
 <%- include('../partials/footer') %>
